@@ -1,0 +1,27 @@
+{
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["target/**/*"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "strict": true,
+    "useUnknownInCatchVariables": false,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "composite": false,
+    "incremental": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "lib": ["esnext", "dom", "DOM.Iterable"],
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "downlevelIteration": true,
+    "types": ["node", "jest"],
+    "esModuleInterop": true
+  }
+}
