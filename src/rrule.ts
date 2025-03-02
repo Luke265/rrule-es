@@ -42,8 +42,8 @@ export class RRule {
   }
 
   /**
-   * A convenient method to create an RRule where `strict` is set to `true`, may be useful if this
-   * behavior is used often throughout a large codebase
+   * A convenient method to create an RRule where `strict` is set to `true`. This may be useful if the
+   * `strict` behavior is used often throughout a large codebase.
    */
   static strict(params: Params, options?: Options) {
     return new RRule(params, { ...options, strict: true });
