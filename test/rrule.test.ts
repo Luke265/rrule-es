@@ -1942,8 +1942,8 @@ describe('Additional smoke tests', () => {
     });
   });
 
-  describe('forceIncludeDtStart', () => {
-    it("when true, yields dtstart as an occurrence even if it doesn't match the RRule", () => {
+  describe('strict', () => {
+    it("when omitted, yields dtstart as an occurrence even if it doesn't match the RRule", () => {
       const rule = new RRule({
         dtStart: new Date(DATE_2019_DECEMBER_19),
         freq: Frequency.MONTHLY,
@@ -1976,7 +1976,7 @@ describe('Additional smoke tests', () => {
       `);
     });
 
-    it('when false, only yields dtstart if it actually matches the RRule', () => {
+    it('when true, only yields dtstart if it actually matches the RRule', () => {
       const rule1 = new RRule(
         {
           dtStart: new Date(DATE_2019_DECEMBER_19),
@@ -1985,7 +1985,7 @@ describe('Additional smoke tests', () => {
           tzid: 'UTC',
           byMonth: [1, 2, 3],
         },
-        { forceIncludeDtStart: false }
+        { strict: true }
       );
 
       const rule2 = new RRule(
@@ -1996,7 +1996,7 @@ describe('Additional smoke tests', () => {
           tzid: 'UTC',
           byMonth: [1, 2, 3, 12],
         },
-        { forceIncludeDtStart: false }
+        { strict: false }
       );
 
       expect(rule1.list(3)).toMatchInlineSnapshot(`

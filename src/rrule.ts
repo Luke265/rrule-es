@@ -27,13 +27,31 @@ export class RRule {
   constructor(params: Params, options?: Options) {
     this.params = sanitizeParams(params as Params);
     this.options = options ?? {
-      forceIncludeDtStart: true,
+      strict: false,
     };
+  }
+
+  static validate(params: Params): string[] {
+    try {
+      validateParams(params);
+
+      return [];
+    } catch (e) {
+      return [e];
+    }
+  }
+
+  /**
+   * A convenient method to create an RRule where `strict` is set to `true`, may be useful if this
+   * behavior is used often throughout a large codebase
+   */
+  static strict(params: Params, options?: Options) {
+    return new RRule(params, { ...options, strict: true });
   }
 
   private *dateset(start?: Date, end?: Date): Generator<Date, null> {
     const { dtStart, tzid, count, until, exDate, rDate } = this.params;
-    const { forceIncludeDtStart } = this.options;
+    const { strict } = this.options;
 
     const isAfterDtStart = (current: Date) => current.getTime() >= dtStart.getTime();
     const isAfterUntil = (current: Date) => !!until && current.getTime() >= until.getTime();
@@ -53,9 +71,9 @@ export class RRule {
     // RRule standard specifies DTSTART is always the first occurrence, regardless of
     // whether it meets the rule criteria or not.
     // Make sure it yields first, *unless* the user has overridden this behavior by
-    // setting forceIncludeDtStart: false
+    // setting strict: true
     let hasYieldedDtStart = false;
-    if (forceIncludeDtStart) {
+    if (!strict) {
       const dtStartIsInBounds = isInBounds(dtStart);
       if (dtStartIsInBounds) {
         yield new Date(current);
@@ -100,8 +118,7 @@ export class RRule {
       if (next) {
         current = next;
         if (!isAfterDtStart(current)) continue;
-        if (forceIncludeDtStart && current.getTime() === dtStart.getTime() && hasYieldedDtStart)
-          continue;
+        if (!strict && current.getTime() === dtStart.getTime() && hasYieldedDtStart) continue;
         if (isAfterUntil(current)) return null;
         yieldedOccurrenceCount++;
         if (isInBounds(current)) {
@@ -197,15 +214,5 @@ export class RRule {
 
   __unsafeSetTimeoutLimit(limit: number) {
     this.timeoutLimit = limit;
-  }
-
-  static validate(params: Params): string[] {
-    try {
-      validateParams(params);
-
-      return [];
-    } catch (e) {
-      return [e];
-    }
   }
 }
