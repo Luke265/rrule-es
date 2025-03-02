@@ -55,5 +55,5 @@ export type Params = Omit<IterParams, 'refDT'> & {
 };
 
 export interface Options {
-  forceIncludeDtStart?: boolean;
+  strict?: boolean;
 }
