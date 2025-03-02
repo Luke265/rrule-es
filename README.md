@@ -5,7 +5,7 @@ rrule-es is a modern JavaScript library for working with recurring events on cal
 ## Usage
 
 ```ts
-import { RRule, Frequency, Weekday } from 'rrule-es';
+import RRule, { Frequency, Weekday } from 'rrule-es';
 
 // Create an RRule for an event that happens every other weekend in the Paris timezone
 const rule = new RRule({
