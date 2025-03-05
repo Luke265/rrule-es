@@ -43,7 +43,7 @@
   },
   "exports": {
     "import": "./target/esm/main.mjs",
-    "require": "./target/cjs/main.js"
+    "require": "./target/cjs/main.cjs"
   },
   "files": [
     "/target",

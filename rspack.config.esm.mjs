@@ -1,5 +1,4 @@
 import { defineConfig } from '@rspack/cli';
-import TerserPlugin from 'terser-webpack-plugin';
 import path from 'node:path';
 
 const __dirname = path.dirname('');
@@ -34,6 +33,7 @@ export default defineConfig({
   },
   output: {
     path: path.resolve(__dirname, 'target/esm'),
+    filename: 'main.mjs',
     libraryTarget: 'module',
     chunkFormat: 'module',
   },
@@ -41,12 +41,7 @@ export default defineConfig({
     outputModule: true,
   },
   optimization: {
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          keep_classnames: /TZDate/,
-        },
-      }),
-    ],
+    minimize: false,
   },
+  devtool: false,
 });
