@@ -29,7 +29,7 @@
     "tslib": "^2.8.1"
   },
   "scripts": {
-    "build": "yarn lint && rspack --config rspack.config.esm.mjs && rspack --config rspack.config.cjs.mjs && yarn build:types",
+    "build": "yarn lint && rspack --config rspack.config.mjs && yarn build:types",
     "build:types": "tsc -d --declarationDir target/types --declarationMap --emitDeclarationOnly --project tsconfig.d.json",
     "clean": "rm -rf target/",
     "test": "jest",
