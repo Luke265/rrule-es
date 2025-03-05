@@ -144,4 +144,4 @@ const rule = new RRule.strict({ ... });
 
 ### `RRule.validate(params: Params)`
 
-Takes an object of RRule params and returns an array of errors if anything about the parameters is wrong. Returns an empty array if there are no errors.
+Takes an object of RRule params and returns an array of errors if anything about the parameters is invalid. Returns an empty array if there are no errors.

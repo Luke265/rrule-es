@@ -19,6 +19,9 @@ type AllResult = Date[] & {
 const ALL_LIMIT = 10000;
 const TIMEOUT_LIMIT = 100000;
 
+/**
+ * A rule representing a recurring calendar event.
+ */
 export class RRule {
   private params: Params;
   private options: Options;
@@ -31,6 +34,12 @@ export class RRule {
     };
   }
 
+  /**
+   *
+   * @param params
+   *
+   * Returns an array of errors if anything about the parameters is invalid. Returns an empty array if there are no errors.
+   */
   static validate(params: Params): string[] {
     try {
       validateParams(params);
@@ -42,6 +51,8 @@ export class RRule {
   }
 
   /**
+   * @param params
+   * @param options
    * A convenient method to create an RRule where `strict` is set to `true`. This may be useful if the
    * `strict` behavior is used often throughout a large codebase.
    */
@@ -154,6 +165,14 @@ export class RRule {
     return null;
   }
 
+  /**
+   *
+   * @param {Date} start
+   * @param {Date} end
+   * @param {boolean} inclusive Defaults to `false`
+   * Returns an array of all dates between `start` and `end`.
+   * If `inclusive` is true and either `start` or `end` are actual occurrences, then `start` and/or `end` will be included in the array of dates.
+   */
   between(start: Date, end: Date, inclusive: boolean = false) {
     if (isNaN(start.getTime())) {
       throw new Error('RRule error: Start date passed to `between` is invalid');
@@ -170,6 +189,13 @@ export class RRule {
     return [...dates];
   }
 
+  /**
+   *
+   * @param {Date} dt
+   * @param {boolean} inclusive Defaults to `false`
+   * Returns the last occurrence before `dt`, or `null` if there is none.
+   * If `inclusive` is true and `dt` is an actual occurrence, the method will return `dt`.
+   */
   before(dt: Date, inclusive: boolean = false) {
     if (isNaN(dt.getTime())) {
       throw new Error('RRule error: Date passed to `before` is invalid');
@@ -183,6 +209,13 @@ export class RRule {
     return lastDate;
   }
 
+  /**
+   *
+   * @param {Date} dt
+   * @param {boolean} inclusive
+   * Returns the last occurrence after `dt`, or `null` if there is none.
+   * If `inclusive` is true and `dt` is an actual occurrence, the method will return `dt`.
+   */
   after(dt: Date, inclusive: boolean = false) {
     if (isNaN(dt.getTime())) {
       throw new Error('RRule error: Date passed to `after` is invalid');
@@ -196,6 +229,13 @@ export class RRule {
     return nextDate;
   }
 
+  /**
+   *
+   * @param {number} limit Defaults to 10000
+   * Returns an array of all `Date`s matching the rule. The `limit` argument will be the maximum size of the list of matches returned.
+   * If you omit the `limit`, the method will return up to 10000 matches. If it hits the limit, the array will come back with the
+   * property `hasMore: true`.
+   */
   list(limit: number = ALL_LIMIT): AllResult {
     const dateGenerator = this.dateset();
     const dates: AllResult = [];
