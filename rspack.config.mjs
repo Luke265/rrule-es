@@ -15,13 +15,6 @@ const baseConfig = {
   },
   mode: 'production',
   optimization: {
-    minimize: false,
-  },
-  devtool: false,
-};
-
-const minimizeOptimization = {
-  optimization: {
     minimizer: [
       new rspack.SwcJsMinimizerRspackPlugin({
         minimizerOptions: {
@@ -92,28 +85,4 @@ const cjsConfig = {
     libraryTarget: 'commonjs-module',
   },
 };
-
-const esmMinConfig = {
-  ...esmConfig,
-  ...minimizeOptimization,
-  output: {
-    ...esmConfig.output,
-    filename: 'main.min.mjs',
-  },
-};
-
-const cjsMinConfig = {
-  ...cjsConfig,
-  ...minimizeOptimization,
-  output: {
-    ...cjsConfig.output,
-    filename: 'main.min.cjs',
-  },
-};
-
-export default [
-  defineConfig(esmConfig),
-  defineConfig(esmMinConfig),
-  defineConfig(cjsConfig),
-  defineConfig(cjsMinConfig),
-];
+export default [defineConfig(esmConfig), defineConfig(cjsConfig)];
