@@ -17,7 +17,7 @@ const rule = new RRule({
 });
 
 // List the first 6 occurrences
-rule.list(6);
+rule.list({ limit: 6 });
 /* [
   2025-03-01T00:00:00.000Z,
   2025-03-02T00:00:00.000Z,
