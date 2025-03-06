@@ -145,3 +145,8 @@ const rule = new RRule.strict({ ... });
 ### `RRule.validate(params: Params)`
 
 Takes an object of RRule params and returns an array of errors if anything about the parameters is invalid. Returns an empty array if there are no errors.
+
+## License
+
+Copyright 2025 Elasticsearch B.V.
+Licensed under the Apache License 2.0, see LICENSE.txt for details
