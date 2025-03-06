@@ -96,7 +96,7 @@ new RRule(params, (options = {}));
 
 ## Methods
 
-### `RRule.prototype.list(limit?: number)`
+### `RRule.prototype.list(opts: { limit?: number })`
 
 returns `Date[] & { hasMore?: boolean }`
 
@@ -104,7 +104,7 @@ Returns an array all dates matching the rule. The `limit` argument will be the m
 
 If it hits the limit, the array will come back with the property `hasMore: true`.
 
-### `RRule.prototype.before(dt: Date. inclusive: boolean = false)`
+### `RRule.prototype.before(dt: Date, opts: { inclusive: boolean = false })`
 
 returns `Date | null`
 
@@ -112,7 +112,7 @@ Returns the last occurrence before `dt`, or `null` if there is none.
 
 If `inclusive` is true and `dt` is an actual occurrence, the method will return `dt`.
 
-### RRule.prototype.after(dt: Date, inclusive: boolean = false)`
+### RRule.prototype.after(dt: Date, opts: { inclusive: boolean = false })`
 
 returns `Date | null`
 
@@ -120,7 +120,7 @@ Returns the last occurrence after `dt`, or `null` if there is none.
 
 If `inclusive` is true and `dt` is an actual occurrence, the method will return `dt`.
 
-### RRule.prototype.between(start: Date, end: Date, inclusive: boolean = false)`
+### RRule.prototype.between(start: Date, end: Date, opts: { inclusive: boolean = false })`
 
 returns `Date[]`
 

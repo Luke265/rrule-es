@@ -41,7 +41,7 @@ describe('RRule class methods', () => {
     count: 10,
   });
 
-  describe('all', () => {
+  describe('list', () => {
     it('returns all occurrences with no limit passed', () => {
       expect(rule.list().map((d) => d.toUTCString())).toMatchInlineSnapshot(`
               [
@@ -59,7 +59,7 @@ describe('RRule class methods', () => {
           `);
     });
     it('returns the number of occurrences passed as the limit value', () => {
-      expect(rule.list(3).map((d) => d.toUTCString())).toMatchInlineSnapshot(`
+      expect(rule.list({ limit: 3 }).map((d) => d.toUTCString())).toMatchInlineSnapshot(`
         [
           "Tue, 02 Sep 1997 13:00:00 GMT",
           "Wed, 03 Sep 1997 13:00:00 GMT",
@@ -85,7 +85,7 @@ describe('RRule class methods', () => {
 
       it('returns the specified date when passed inclusive: true', () => {
         expect(
-          rule.before(new Date('1997-09-06T09:00:00.000-04:00'), true)?.toUTCString()
+          rule.before(new Date('1997-09-06T09:00:00.000-04:00'), { inclusive: true })?.toUTCString()
         ).toMatchInlineSnapshot(`"Sat, 06 Sep 1997 13:00:00 GMT"`);
       });
     });
@@ -114,7 +114,7 @@ describe('RRule class methods', () => {
 
       it('returns the specified date when passed inclusive: true', () => {
         expect(
-          rule.after(new Date('1997-09-06T09:00:00.000-04:00'), true)?.toUTCString()
+          rule.after(new Date('1997-09-06T09:00:00.000-04:00'), { inclusive: true })?.toUTCString()
         ).toMatchInlineSnapshot(`"Sat, 06 Sep 1997 13:00:00 GMT"`);
       });
     });
@@ -173,7 +173,7 @@ describe('RRule class methods', () => {
             .between(
               new Date('1997-09-05T09:00:00.000-04:00'),
               new Date('1997-09-10T20:00:00.000-04:00'),
-              true
+              { inclusive: true }
             )
             .map((d) => d.toUTCString())
         ).toMatchInlineSnapshot(`
@@ -214,7 +214,7 @@ describe('RRule class methods', () => {
             .between(
               new Date('1997-09-05T20:00:00.000-04:00'),
               new Date('1997-09-10T09:00:00.000-04:00'),
-              true
+              { inclusive: true }
             )
             .map((d) => d.toUTCString())
         ).toMatchInlineSnapshot(`
@@ -412,7 +412,9 @@ describe('iCalendar.org RFC 5545 Examples', () => {
 
     expect(
       rule
-        .between(DATE_1997_SEP_02_9AM_NEW_YORK_DST, new Date('1997-12-04T00:00:00.000-05:00'), true)
+        .between(DATE_1997_SEP_02_9AM_NEW_YORK_DST, new Date('1997-12-04T00:00:00.000-05:00'), {
+          inclusive: true,
+        })
         .map((d) => d.toUTCString())
     ).toMatchInlineSnapshot(`
       [
@@ -671,7 +673,9 @@ describe('iCalendar.org RFC 5545 Examples', () => {
 
     expect(
       rule
-        .between(DATE_1997_SEP_02_9AM_NEW_YORK_DST, new Date('1998-02-18T09:00:00.000-05:00'), true)
+        .between(DATE_1997_SEP_02_9AM_NEW_YORK_DST, new Date('1998-02-18T09:00:00.000-05:00'), {
+          inclusive: true,
+        })
         .map((d) => d.toUTCString())
     ).toMatchInlineSnapshot(`
       [
@@ -896,7 +900,7 @@ describe('iCalendar.org RFC 5545 Examples', () => {
       byMonthDay: [-3],
     });
 
-    expect(rule.list(6)).toMatchInlineSnapshot(`
+    expect(rule.list({ limit: 6 })).toMatchInlineSnapshot(`
       [
         1997-09-28T13:00:00.000Z,
         1997-10-29T14:00:00.000Z,
@@ -995,7 +999,9 @@ describe('iCalendar.org RFC 5545 Examples', () => {
 
     expect(
       rule
-        .between(DATE_1997_SEP_02_9AM_NEW_YORK_DST, new Date('1998-04-01T09:00:00.000-04:00'), true)
+        .between(DATE_1997_SEP_02_9AM_NEW_YORK_DST, new Date('1998-04-01T09:00:00.000-04:00'), {
+          inclusive: true,
+        })
         .map((d) => d.toUTCString())
     ).toMatchInlineSnapshot(`
       [
@@ -1106,7 +1112,7 @@ describe('iCalendar.org RFC 5545 Examples', () => {
       byDay: [[20, Weekday.MO]],
     });
 
-    expect(rule.list(3).map((d) => d.toUTCString())).toMatchInlineSnapshot(`
+    expect(rule.list({ limit: 3 }).map((d) => d.toUTCString())).toMatchInlineSnapshot(`
       [
         "Mon, 19 May 1997 14:00:00 GMT",
         "Mon, 18 May 1998 14:00:00 GMT",
@@ -1124,7 +1130,7 @@ describe('iCalendar.org RFC 5545 Examples', () => {
       byWeekNo: [20],
     });
 
-    expect(rule.list(3).map((d) => d.toUTCString())).toMatchInlineSnapshot(`
+    expect(rule.list({ limit: 3 }).map((d) => d.toUTCString())).toMatchInlineSnapshot(`
       [
         "Mon, 12 May 1997 14:00:00 GMT",
         "Mon, 11 May 1998 14:00:00 GMT",
@@ -1147,7 +1153,7 @@ describe('iCalendar.org RFC 5545 Examples', () => {
         .between(
           new Date('1997-03-13T09:00:00.000-05:00'),
           new Date('1999-03-25T09:00:00.000-05:00'),
-          true
+          { inclusive: true }
         )
         .map((d) => d.toUTCString())
     ).toMatchInlineSnapshot(`
@@ -1181,7 +1187,7 @@ describe('iCalendar.org RFC 5545 Examples', () => {
         .between(
           new Date('1997-06-05T09:00:00.000-05:00'),
           new Date('1999-08-26T09:00:00.000-05:00'),
-          true
+          { inclusive: true }
         )
         .map((d) => d.toUTCString())
     ).toMatchInlineSnapshot(`
@@ -1241,7 +1247,9 @@ describe('iCalendar.org RFC 5545 Examples', () => {
 
     expect(
       rule
-        .between(DATE_1997_SEP_02_9AM_NEW_YORK_DST, new Date('2000-10-13T09:00:00.000-05:00'), true)
+        .between(DATE_1997_SEP_02_9AM_NEW_YORK_DST, new Date('2000-10-13T09:00:00.000-05:00'), {
+          inclusive: true,
+        })
         .map((d) => d.toUTCString())
     ).toMatchInlineSnapshot(`
       [
@@ -1268,7 +1276,7 @@ describe('iCalendar.org RFC 5545 Examples', () => {
         .between(
           new Date('1997-09-13T09:00:00.000-04:00'),
           new Date('1998-06-13T09:00:00.000-04:00'),
-          true
+          { inclusive: true }
         )
         .map((d) => d.toUTCString())
     ).toMatchInlineSnapshot(`
@@ -1303,7 +1311,7 @@ describe('iCalendar.org RFC 5545 Examples', () => {
         .between(
           new Date('1996-11-05T09:00:00.000-05:00'),
           new Date('2024-11-05T09:00:00.000-05:00'),
-          true
+          { inclusive: true }
         )
         .map((d) => d.toUTCString())
     ).toMatchInlineSnapshot(`
@@ -1348,7 +1356,7 @@ describe('iCalendar.org RFC 5545 Examples', () => {
       bySetPos: [-2],
     });
 
-    expect(rule.list(7).map((d) => d.toUTCString())).toMatchInlineSnapshot(`
+    expect(rule.list({ limit: 7 }).map((d) => d.toUTCString())).toMatchInlineSnapshot(`
       [
         "Mon, 29 Sep 1997 13:00:00 GMT",
         "Thu, 30 Oct 1997 14:00:00 GMT",
@@ -1459,8 +1467,8 @@ describe('iCalendar.org RFC 5545 Examples', () => {
         "Tue, 02 Sep 1997 18:00:00 GMT",
       ]
     `;
-    expect(rule1.list(16).map((d) => d.toUTCString())).toMatchInlineSnapshot(snapshot);
-    expect(rule2.list(16).map((d) => d.toUTCString())).toMatchInlineSnapshot(snapshot);
+    expect(rule1.list({ limit: 16 }).map((d) => d.toUTCString())).toMatchInlineSnapshot(snapshot);
+    expect(rule2.list({ limit: 16 }).map((d) => d.toUTCString())).toMatchInlineSnapshot(snapshot);
   });
 
   test('An example where an invalid date (i.e. February 30) is ignored', () => {
@@ -1539,7 +1547,7 @@ describe('Additional smoke tests', () => {
         tzid: 'UTC',
       });
 
-      expect(rule.list(12)).toMatchInlineSnapshot(`
+      expect(rule.list({ limit: 12 })).toMatchInlineSnapshot(`
               [
                 2023-01-06T23:00:00.000Z,
                 2023-01-06T23:00:01.000Z,
@@ -1564,7 +1572,7 @@ describe('Additional smoke tests', () => {
         tzid: 'UTC',
       });
 
-      expect(rule.list(12)).toMatchInlineSnapshot(`
+      expect(rule.list({ limit: 12 })).toMatchInlineSnapshot(`
         [
           2023-01-06T23:00:00.000Z,
           2023-01-06T23:00:15.000Z,
@@ -1592,7 +1600,7 @@ describe('Additional smoke tests', () => {
         tzid: 'Europe/Madrid',
         byDay: [Weekday.SA],
       });
-      expect(rule.list(12)).toMatchInlineSnapshot(`
+      expect(rule.list({ limit: 12 })).toMatchInlineSnapshot(`
         [
           2023-01-06T23:00:00.000Z,
           2023-01-13T23:00:00.000Z,
@@ -1618,7 +1626,7 @@ describe('Additional smoke tests', () => {
         exDate: [new Date(DATE_2023_JAN_6_11PM)],
       });
 
-      expect(rule2.list(12)).toMatchInlineSnapshot(`
+      expect(rule2.list({ limit: 12 })).toMatchInlineSnapshot(`
         [
           2023-01-07T23:00:00.000Z,
           2023-01-14T23:00:00.000Z,
@@ -1644,7 +1652,7 @@ describe('Additional smoke tests', () => {
         // @ts-expect-error Expect invalid values
         byDay: [Weekday.TH, 0, -2],
       });
-      expect(rule.list(14)).toMatchInlineSnapshot(`
+      expect(rule.list({ limit: 14 })).toMatchInlineSnapshot(`
         [
           2019-12-19T00:00:00.000Z,
           2019-12-26T00:00:00.000Z,
@@ -1673,7 +1681,7 @@ describe('Additional smoke tests', () => {
         exDate: [new Date(DATE_2019)],
       });
 
-      expect(rule2.list(9)).toMatchInlineSnapshot(`
+      expect(rule2.list({ limit: 9 })).toMatchInlineSnapshot(`
         [
           2019-01-05T00:00:00.000Z,
           2019-01-06T00:00:00.000Z,
@@ -1698,7 +1706,7 @@ describe('Additional smoke tests', () => {
         tzid: 'UTC',
         byMonth: [0],
       });
-      expect(rule.list(14)).toMatchInlineSnapshot(`
+      expect(rule.list({ limit: 14 })).toMatchInlineSnapshot(`
         [
           2019-12-19T00:00:00.000Z,
           2020-12-19T00:00:00.000Z,
@@ -1731,7 +1739,7 @@ describe('Additional smoke tests', () => {
         bySecond: [0, 15],
         exDate: [new Date(DATE_2019_DECEMBER_19)],
       });
-      expect(rule.list(14)).toMatchInlineSnapshot(`
+      expect(rule.list({ limit: 14 })).toMatchInlineSnapshot(`
         [
           2019-12-19T14:30:00.000Z,
           2019-12-19T14:30:15.000Z,
@@ -1760,7 +1768,7 @@ describe('Additional smoke tests', () => {
         bySecond: [30, 0],
         exDate: [new Date(DATE_2019_DECEMBER_19)],
       });
-      expect(rule.list(14)).toMatchInlineSnapshot(`
+      expect(rule.list({ limit: 14 })).toMatchInlineSnapshot(`
         [
           2019-12-19T00:15:30.000Z,
           2019-12-19T00:15:00.000Z,
@@ -1788,7 +1796,7 @@ describe('Additional smoke tests', () => {
         bySecond: [10, 30, 58],
         exDate: [new Date(DATE_2019_DECEMBER_19)],
       });
-      expect(rule.list(14)).toMatchInlineSnapshot(`
+      expect(rule.list({ limit: 14 })).toMatchInlineSnapshot(`
         [
           2019-12-19T00:00:10.000Z,
           2019-12-19T00:00:30.000Z,
@@ -1817,7 +1825,7 @@ describe('Additional smoke tests', () => {
         bySecond: [10, 30, 58],
         exDate: [new Date(DATE_2019_DECEMBER_19)],
       });
-      expect(rule.list(14)).toMatchInlineSnapshot(`
+      expect(rule.list({ limit: 14 })).toMatchInlineSnapshot(`
         [
           2019-12-19T00:00:10.000Z,
           2019-12-19T00:00:30.000Z,
@@ -1849,7 +1857,7 @@ describe('Additional smoke tests', () => {
         exDate: [new Date(DATE_2020)],
       });
 
-      expect(rule3.list(10)).toMatchInlineSnapshot(`
+      expect(rule3.list({ limit: 10 })).toMatchInlineSnapshot(`
         [
           2020-04-01T00:00:00.000Z,
           2021-04-02T00:00:00.000Z,
@@ -1873,7 +1881,7 @@ describe('Additional smoke tests', () => {
         tzid: 'UTC',
       });
 
-      expect(rule.list(10)).toMatchInlineSnapshot(`
+      expect(rule.list({ limit: 10 })).toMatchInlineSnapshot(`
         [
           2020-01-01T00:00:00.000Z,
           2021-01-01T00:00:00.000Z,
@@ -1962,7 +1970,7 @@ describe('Additional smoke tests', () => {
         byMonth: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
       });
 
-      expect(rule.list(18)).toMatchInlineSnapshot(`
+      expect(rule.list({ limit: 18 })).toMatchInlineSnapshot(`
         [
           2019-12-19T00:00:00.000Z,
           2020-01-19T00:00:00.000Z,
@@ -2009,14 +2017,14 @@ describe('Additional smoke tests', () => {
         { strict: false }
       );
 
-      expect(rule1.list(3)).toMatchInlineSnapshot(`
+      expect(rule1.list({ limit: 3 })).toMatchInlineSnapshot(`
         [
           2020-01-19T00:00:00.000Z,
           2020-02-19T00:00:00.000Z,
           2020-03-19T00:00:00.000Z,
         ]
       `);
-      expect(rule2.list(3)).toMatchInlineSnapshot(`
+      expect(rule2.list({ limit: 3 })).toMatchInlineSnapshot(`
         [
           2019-12-19T00:00:00.000Z,
           2020-01-19T00:00:00.000Z,
@@ -2077,7 +2085,7 @@ describe('Error handling', () => {
         tzid: 'UTC',
       });
       rule.__unsafeSetTimeoutLimit(10); // Speed this test up, don't actually iterate 1000000 times
-      rule.list(100001);
+      rule.list({ limit: 100001 });
     };
 
     expect(testFn).toThrowErrorMatchingInlineSnapshot(`"RRule iteration limit exceeded"`);

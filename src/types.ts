@@ -67,3 +67,15 @@ export type Params = Omit<IterParams, 'refDT'> & {
 export interface Options {
   strict?: boolean;
 }
+
+export interface MethodOptions {
+  inclusive?: boolean;
+}
+
+export interface ListMethodOptions {
+  limit?: number;
+}
+
+export type ListResult = Date[] & {
+  hasMore?: boolean;
+};
