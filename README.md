@@ -96,32 +96,36 @@ new RRule(params, (options = {}));
 
 ## Methods
 
-### `RRule.prototype.list(opts: { limit?: number })`
+### `RRule.prototype.list`
 
+takes `(opts: { limit?: number })`
 returns `Date[] & { hasMore?: boolean }`
 
 Returns an array all dates matching the rule. The `limit` argument will be the maximum size of the list of matches returned. If you omit the `limit`, the method will return up to 10000 matches.
 
 If it hits the limit, the array will come back with the property `hasMore: true`.
 
-### `RRule.prototype.before(dt: Date, opts: { inclusive: boolean = false })`
+### `RRule.prototype.before`
 
+takes `(dt: Date, opts: { inclusive: boolean = false })`
 returns `Date | null`
 
 Returns the last occurrence before `dt`, or `null` if there is none.
 
 If `inclusive` is true and `dt` is an actual occurrence, the method will return `dt`.
 
-### RRule.prototype.after(dt: Date, opts: { inclusive: boolean = false })`
+### `RRule.prototype.after`
 
+takes `(dt: Date, opts: { inclusive: boolean = false })`
 returns `Date | null`
 
 Returns the last occurrence after `dt`, or `null` if there is none.
 
 If `inclusive` is true and `dt` is an actual occurrence, the method will return `dt`.
 
-### RRule.prototype.between(start: Date, end: Date, opts: { inclusive: boolean = false })`
+### `RRule.prototype.between`
 
+takes `(start: Date, end: Date, opts: { inclusive: boolean = false })`
 returns `Date[]`
 
 Returns an array of all dates between `start` and `end`.
