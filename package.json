@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "Apache-2.0",
   "description": "JavaScript library for working with iCalendar RRULE rules",
-  "main": "target/cjs/main.js",
+  "main": "target/cjs/main.cjs",
   "module": "target/esm/main.mjs",
   "types": "target/types/index.d.ts",
   "devDependencies": {
