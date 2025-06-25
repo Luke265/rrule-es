@@ -41,7 +41,8 @@
   },
   "exports": {
     "import": "./target/esm/main.mjs",
-    "require": "./target/cjs/main.cjs"
+    "require": "./target/cjs/main.cjs",
+    "types": "./target/types/index.d.ts"
   },
   "files": [
     "/target",
